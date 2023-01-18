@@ -179,29 +179,6 @@ direction determine_which_direction()
     return right_direction;
 }
 
-std::vector<sf::Sprite*> loadAnimations()
-{
-    std::vector<sf::Sprite*> animationsSprite;
-
-    TextureMgr texture_mgr = TextureMgr();
-    texture_mgr.parseAnimations("../MyIsaac/Ressources/IsaacSprite");
-
-    sf::Texture& FullIssac = texture_mgr.get_texture("../MyIsaac/Ressources/IsaacSprite.png");
-    sf::Sprite* sprite = new sf::Sprite(FullIssac);
-
-    std::vector<std::string> animations = {"Head_Up","Head_Right","Head_Down","Head_Left","Body_Vertical","Body_Right","Body_Left"};
-
-    for ( int i = 0 ; i < 7 ; i++ )
-    {
-        my_struct texture = texture_mgr.map[animations[i]];
-    
-        sprite->setTextureRect(sf::IntRect(texture.x, texture.y, texture.SizeX, texture.SizeY));
-        animationsSprite.emplace_back(sprite);
-    }
-
-    return animationsSprite;
-}
-
 int WhichAnimations(bool head = true)
 {
     if ( head)
@@ -252,12 +229,6 @@ int main()
     sf::Texture FullIssac = texture_mgr.get_texture("../MyIsaac/Ressources/IsaacSprite.png");
     sf::Sprite spriteHead(FullIssac);
     sf::Sprite spriteBody(FullIssac);
-
-    my_struct head = texture_mgr.map["Head_Down"];
-    my_struct body = texture_mgr.map["Body_Vertical"];
-    
-    spriteHead.setTextureRect(sf::IntRect(head.x, head.y, head.SizeX, head.SizeY));
-    spriteBody.setTextureRect(sf::IntRect(body.x, body.y, body.SizeX, body.SizeY));
     
     spriteHead.setScale(2.f, 2.f);
     spriteBody.setScale(2.f, 2.f);
@@ -301,7 +272,19 @@ int main()
     
     sf::Sprite spriteBasement(FullBasement);
 
-    std::vector<sf::Sprite*> animationsSprite = loadAnimations();
+    
+    std::vector<std::string> animations = {"Head_Up","Head_Right","Head_Down","Head_Left","Body_Vertical","Body_Right","Body_Left"};;
+    std::vector<sf::Sprite> animationsSprite;
+    sf::Sprite anim(FullIssac);
+    for ( int i = 0 ; i < 7 ; i++ )
+    {
+        my_struct texture = texture_mgr.map[animations[i]];
+        
+        anim.setScale(2.f, 2.f);
+    
+        anim.setTextureRect(sf::IntRect(texture.x, texture.y, texture.SizeX, texture.SizeY));
+        animationsSprite.push_back( anim );
+    }
     
     for ( int i = 0; i < 13; i++)
     {
@@ -400,12 +383,12 @@ int main()
             
             for (int i = 0; i < grounds.size(); i++)
                 window.draw(grounds[i]);
-            
-            // window.draw(*animationsSprite[WhichAnimations(true)]);
-            // window.draw(*animationsSprite[WhichAnimations(false)]);
 
-            window.draw(spriteHead);
-            window.draw(spriteBody);
+            spriteHead = animationsSprite[WhichAnimations(true)];
+            spriteBody = animationsSprite[WhichAnimations(false)];
+
+            my_struct head = texture_mgr.map["Head_Down"];
+            my_struct body = texture_mgr.map["Body_Vertical"];
             
             // Display player 
             spriteHead.setPosition(x, y);
@@ -416,6 +399,7 @@ int main()
             spriteBody.setOrigin(body.SizeX / 2, body.SizeY / 2);
             
             window.draw(spriteHead);
+            window.draw(spriteBody);
             
             //Shoot
             if(InputManager::Instance()->KeyPress(Shoot))
