@@ -36,7 +36,11 @@ class TextureMgr
         sf::Texture& get_texture(std::string path);
         
         std::map<std::string,my_struct> map;
-private:
+
+        static TextureMgr *pInstance;
+
+        static TextureMgr* Instance();
+    private:
     std::map<std::string,TextureInfo> textures;
 
 

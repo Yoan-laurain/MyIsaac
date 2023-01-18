@@ -7,6 +7,17 @@
 
 using namespace rapidxml;
 
+TextureMgr *TextureMgr::pInstance = nullptr;
+
+TextureMgr* TextureMgr::Instance()
+{
+    if (pInstance == nullptr)
+        pInstance = new TextureMgr;
+
+    return pInstance;
+}
+
+
 TextureMgr::TextureMgr(){}
 
 TextureMgr::~TextureMgr(){}
