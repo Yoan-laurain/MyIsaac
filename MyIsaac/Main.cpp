@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <iostream>
 #include "Headers/InputManager.h"
 #include "Headers/TextureMgr.h"
 
@@ -48,19 +50,33 @@ enum actions
     Exit,
 };
 
+actions currentAction;
+
 int update()
 {
     if(InputManager::Instance()->KeyDown(Up))
+    {
         y = ( y < 156 + 26 ? 156 + 26 : y -= speed );
+        currentAction = Up;
+    }
     
     if(InputManager::Instance()->KeyDown(Down))
+    {
         y = ( y  > height_window - 26 ? height_window - 26 : y += speed );
+        currentAction = Down;
+    }
 
     if(InputManager::Instance()->KeyDown(Left))
+    {
         x = ( x < 156 + 26 ? 156 + 26 : x -= speed );
+        currentAction = Left;
+    }
     
     if(InputManager::Instance()->KeyDown(Right))
+    {
         x = ( x  > width_window - 26 ? width_window - 26 : x += speed );
+        currentAction = Right;
+    }
 
     if (InputManager::Instance()->KeyDown(Exit))
     {
@@ -163,6 +179,60 @@ direction determine_which_direction()
     return right_direction;
 }
 
+std::vector<sf::Sprite*> loadAnimations()
+{
+    std::vector<sf::Sprite*> animationsSprite;
+
+    TextureMgr texture_mgr = TextureMgr();
+    texture_mgr.parseAnimations("../MyIsaac/Ressources/IsaacSprite");
+
+    sf::Texture& FullIssac = texture_mgr.get_texture("../MyIsaac/Ressources/IsaacSprite.png");
+    sf::Sprite* sprite = new sf::Sprite(FullIssac);
+
+    std::vector<std::string> animations = {"Head_Up","Head_Right","Head_Down","Head_Left","Body_Vertical","Body_Right","Body_Left"};
+
+    for ( int i = 0 ; i < 7 ; i++ )
+    {
+        my_struct texture = texture_mgr.map[animations[i]];
+    
+        sprite->setTextureRect(sf::IntRect(texture.x, texture.y, texture.SizeX, texture.SizeY));
+        animationsSprite.emplace_back(sprite);
+    }
+
+    return animationsSprite;
+}
+
+int WhichAnimations(bool head = true)
+{
+    if ( head)
+    {
+        switch (currentAction)
+        {
+            case Up:
+                return 0;
+            case Right:
+                return 1;
+            case Down:
+                return 2;
+            case Left:
+                return 3;
+        }
+    }
+    else
+    {
+        switch (currentAction)
+        {
+            case Up:
+                return 4;
+            case Right:
+                return 5;
+            case Down:
+                return 4;
+            case Left:
+                return 6;
+        }
+    }
+}
 
 int main()
 {
@@ -183,11 +253,11 @@ int main()
     sf::Sprite spriteHead(FullIssac);
     sf::Sprite spriteBody(FullIssac);
 
-    my_struct head = texture_mgr.map["Head_Left"];
+    my_struct head = texture_mgr.map["Head_Down"];
     my_struct body = texture_mgr.map["Body_Vertical"];
     
     spriteHead.setTextureRect(sf::IntRect(head.x, head.y, head.SizeX, head.SizeY));
-    spriteBody.setTextureRect(sf::IntRect(body.x, body.y, body.SizeX, head.SizeY));
+    spriteBody.setTextureRect(sf::IntRect(body.x, body.y, body.SizeX, body.SizeY));
     
     spriteHead.setScale(2.f, 2.f);
     spriteBody.setScale(2.f, 2.f);
@@ -229,8 +299,9 @@ int main()
     spriteCornerBottomRight.setScale(-2.f, -2.f);
     spriteCornerBottomRight.setPosition(width_window + cornerBottomRight.SizeX / 2,height_window + cornerBottomRight.SizeY / 2);
     
-    
     sf::Sprite spriteBasement(FullBasement);
+
+    std::vector<sf::Sprite*> animationsSprite = loadAnimations();
     
     for ( int i = 0; i < 13; i++)
     {
@@ -330,12 +401,20 @@ int main()
             for (int i = 0; i < grounds.size(); i++)
                 window.draw(grounds[i]);
             
+            // window.draw(*animationsSprite[WhichAnimations(true)]);
+            // window.draw(*animationsSprite[WhichAnimations(false)]);
+
             window.draw(spriteHead);
-            //window.draw(spriteBody);
+            window.draw(spriteBody);
             
             // Display player 
             spriteHead.setPosition(x, y);
-            spriteHead.setOrigin(50, 50);
+            spriteBody.setPosition(x, y + head.SizeY * 1.2);
+
+            // set the image at the center of the sprite
+            spriteHead.setOrigin(head.SizeX / 2, head.SizeY / 2);
+            spriteBody.setOrigin(body.SizeX / 2, body.SizeY / 2);
+            
             window.draw(spriteHead);
             
             //Shoot
