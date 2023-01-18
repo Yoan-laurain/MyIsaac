@@ -9,20 +9,17 @@
 int main()
 {
     // Facto
-    BasementAssets *basementAssets = new BasementAssets(GameDatas::Instance()->width,GameDatas::Instance()->height);
-    basementAssets->LoadAssets();
-    basementAssets->load_corner();
-    
-    IsaacAssets *isaacAssets = new IsaacAssets(GameDatas::Instance()->width,GameDatas::Instance()->height);
-    isaacAssets->load_assets();
+    auto* basement_assets = new BasementAssets(GameDatas::Instance()->width,GameDatas::Instance()->height);
+    basement_assets->LoadAssets();
+    basement_assets->load_corner();
+
+    auto* isaac_assets = new IsaacAssets(GameDatas::Instance()->width,GameDatas::Instance()->height);
+    isaac_assets->load_assets();
 
     new TearAssets(GameDatas::Instance()->width,GameDatas::Instance()->height);
     
     sf::RenderWindow window;
-    window.create(sf::VideoMode(GameDatas::Instance()->width, GameDatas::Instance()->height), "Issac");
-
-    // Utile ?  
-    sf::RectangleShape background(sf::Vector2f(GameDatas::Instance()->width, GameDatas::Instance()->height));
+    window.create(sf::VideoMode(static_cast<unsigned>(GameDatas::Instance()->width), static_cast<int>(GameDatas::Instance()->height)), "Issac");
     
     while (window.isOpen())
     {
@@ -42,8 +39,8 @@ int main()
             window.clear();
 
             // Facto
-            basementAssets->draw(window);
-            isaacAssets->update(window);
+            basement_assets->draw(window);
+            isaac_assets->update(window);
             
             if ( GameDatas::Instance()->update(window) )
                 break;
