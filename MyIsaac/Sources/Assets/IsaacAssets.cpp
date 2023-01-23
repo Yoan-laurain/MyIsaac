@@ -1,7 +1,7 @@
-﻿#include "Headers/Assets/IsaacAssets.h"
+﻿#include "../../Headers/Assets/IsaacAssets.h"
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Headers/GameDatas.h"
-#include "Headers/Managers/TextureMgr.h"
+#include "../../Headers/GameDatas.h"
+#include "../../Headers/Managers/TextureMgr.h"
 
 IsaacAssets::IsaacAssets(float width, float height) : GameAssets ( width, height )
 {

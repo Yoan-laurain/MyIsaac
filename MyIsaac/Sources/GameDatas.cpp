@@ -1,7 +1,7 @@
-﻿#include "Headers/GameDatas.h"
-#include "Headers/Managers/InputManager.h"
-#include "Headers/Assets/TearAssets.h"
-#include "Headers/Managers/TextureMgr.h"
+﻿#include "../Headers/GameDatas.h"
+#include "../Headers/Managers/InputManager.h"
+#include "../Headers/Assets/TearAssets.h"
+#include "../Headers/Managers/TextureMgr.h"
 
 struct my_struct;
 GameDatas *GameDatas::pInstance = nullptr;

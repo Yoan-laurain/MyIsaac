@@ -1,5 +1,5 @@
-﻿#include "Headers/Assets//BasementAssets.h"
-#include "Headers/Managers/TextureMgr.h"
+﻿#include "../../Headers/Assets/BasementAssets.h"
+#include "../../Headers/Managers/TextureMgr.h"
 
 BasementAssets::BasementAssets(const float width, const float height): GameAssets( width, height)
 {

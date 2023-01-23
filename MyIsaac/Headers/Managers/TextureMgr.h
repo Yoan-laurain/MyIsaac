@@ -2,7 +2,7 @@
 #include <map>
 #include <string>
 #include <SFML/Graphics/Texture.hpp>
-#include "Enums.h"
+#include "../../Enums.h"
 
 
 struct my_struct

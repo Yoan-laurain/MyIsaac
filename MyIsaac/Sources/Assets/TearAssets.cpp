@@ -1,6 +1,6 @@
-﻿#include "Headers/Assets/TearAssets.h"
+﻿#include "../../Headers/Assets/TearAssets.h"
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Headers/Managers/TextureMgr.h"
+#include "../../Headers/Managers/TextureMgr.h"
 
 TearAssets::TearAssets(float width, float height) : GameAssets ( width, height )
 {

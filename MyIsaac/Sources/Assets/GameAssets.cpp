@@ -1,4 +1,4 @@
-﻿#include "Headers/Assets/GameAssets.h"
+﻿#include "../../Headers/Assets/GameAssets.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
 GameAssets::GameAssets(float width, float height)
