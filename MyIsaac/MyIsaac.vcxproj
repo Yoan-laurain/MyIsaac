@@ -144,7 +144,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MyRect.cpp" />
+    <ClCompile Include="MySprite.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sources\Assets\BasementAssets.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -663,6 +667,7 @@
       <AdditionalIncludeDirectories>D:\Users\ghost\Bureau\Projets C++\MyIsaac\Dependencies\include\;D:\Users\ghost\Bureau\Projets C++\MyIsaac\MyIsaac\;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
@@ -673,6 +678,13 @@
     <ClInclude Include="Headers\GameDatas.h" />
     <ClInclude Include="Headers\Managers\InputManager.h" />
     <ClInclude Include="Headers\Managers\TextureMgr.h" />
+    <ClInclude Include="IComponent.h" />
+    <ClInclude Include="IDrawable.h" />
+    <ClInclude Include="IEntity.h" />
+    <ClInclude Include="MyRect.h" />
+    <ClInclude Include="MySprite.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ressources\Basement.png" />
